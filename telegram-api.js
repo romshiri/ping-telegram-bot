@@ -31,7 +31,7 @@ TelegramBot.prototype.executeMethod = function(method, options) {
 	    pathname: '/bot' + this.token + '/' + method
 	});
 
-	console.log('excute: ' + method + new Date())
+	console.log('execute: ' + method + new Date())
 	return httpRequest(options)
 		.then(function(response) {
 			if(response[0].statusCode !== 200) {
