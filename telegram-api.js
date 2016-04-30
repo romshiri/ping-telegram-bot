@@ -31,7 +31,7 @@ TelegramBot.prototype.executeMethod = function(method, options) {
 	    pathname: '/bot' + this.token + '/' + method
 	});
 
-	console.log('execute: ' + method + new Date())
+	console.log('execute: ' + method + ' on ' + new Date())
 	return httpRequest(options)
 		.then(function(response) {
 			if(response[0].statusCode !== 200) {
@@ -112,11 +112,12 @@ TelegramBot.prototype.sendChatAction = function(chatId, action) {
 	this.executeMethod('sendChatAction', {qs: query});
 };
 
-TelegramBot.prototype.sendTextMessage = function(chatId, text) {
+TelegramBot.prototype.sendTextMessage = function(chatId, text, disablePreview) {
 	var query = {
 		chat_id: chatId,
 		text : text,
-		parse_mode: 'Markdown'
+		parse_mode: 'Markdown',
+		disable_web_page_preview: disablePreview
 	};
 
 	this.sendChatAction(chatId, "typing");
@@ -146,6 +147,15 @@ TelegramBot.prototype.sendDocument = function(chatId, document) {
 
 	this.sendChatAction(chatId, "upload_photo");
 	this.executeMethod('sendDocument', {formData: result[0] ,qs: query});
+};
+
+TelegramBot.prototype.answerInlineQuery = function(inlineQueryId, results) {
+	var answerInlineQuery = {
+		inline_query_id: inlineQueryId,
+		results: JSON.stringify(results)
+	};
+
+	this.executeMethod('answerInlineQuery', {qs: answerInlineQuery});
 };
 
 
