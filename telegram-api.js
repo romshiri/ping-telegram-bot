@@ -39,7 +39,7 @@ TelegramBot.prototype.executeMethod = function(method, options) {
 			}
 
 			var responseData = JSON.parse(response[0].body);
-			
+
 			if(responseData.ok) {
 				return responseData.result;
 			} else {
@@ -50,7 +50,7 @@ TelegramBot.prototype.executeMethod = function(method, options) {
 
 TelegramBot.prototype.startPolling = function() {
 	var self = this;
-	  
+
 	var query = {
 	  offset: self.offset + 1,
 	};
@@ -61,15 +61,15 @@ TelegramBot.prototype.startPolling = function() {
 		    if (index === updates.length - 1) {
 		      self.offset = update.update_id;
 		      console.log('updated offset: %s', self.offset);
-		   	}	
+		   	}
 		   	self.emit('onMessageReceived',update);
 	    });
 	  })
-	.catch(function(error) { 
+	.catch(function(error) {
 		console.log(error)
 	})
 	.finally(function(){
-	  	setTimeout(self.startPolling.bind(self),self.interval);	
+	  	setTimeout(self.startPolling.bind(self),self.interval);
 	});
 };
 
@@ -116,6 +116,7 @@ TelegramBot.prototype.sendTextMessage = function(chatId, text) {
 	var query = {
 		chat_id: chatId,
 		text : text,
+		parse_mode: 'Markdown'
 	};
 
 	this.sendChatAction(chatId, "typing");
@@ -124,7 +125,7 @@ TelegramBot.prototype.sendTextMessage = function(chatId, text) {
 
 TelegramBot.prototype.sendPhoto = function(chatId, photo, caption) {
 	var result = this.formatData('photo',photo);
-	
+
 	var query = {
 		chat_id: chatId,
 		photo : result[1],
@@ -137,7 +138,7 @@ TelegramBot.prototype.sendPhoto = function(chatId, photo, caption) {
 
 TelegramBot.prototype.sendDocument = function(chatId, document) {
 	var result = this.formatData('document',document);
-	
+
 	var query = {
 		chat_id: chatId,
 		document : result[1],
@@ -150,4 +151,4 @@ TelegramBot.prototype.sendDocument = function(chatId, document) {
 
 
 
-module.exports = TelegramBot; 
+module.exports = TelegramBot;

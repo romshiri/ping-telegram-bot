@@ -24,10 +24,24 @@ bot.startPolling();
 bot.on('onMessageReceived', function(update) {
   tcpp.ping({ address: update.message.text }, function(err, data) {
       console.log(data);
-      bot.sendTextMessage(update.message.chat.id, createMessage(data));
+
+      bot.sendTextMessage(update.message.chat.id, "*bold* `inline fixed-width code` ```pre-formatted fixed-width code block```");
+
+      if(isNaN(data.avg))
+        bot.sendTextMessage(update.message.chat.id, createErrorMessage(data));
+      else
+        bot.sendTextMessage(update.message.chat.id, createMessage(data));
   });
 });
 
 function createMessage(data){
-  return 'Pinging {0}... \n Average response time: {1}'.format(data.address, data.avg);
+  return ("Pinging {0}... It's *Alive!*\n" +
+  "\n*Average response time:* {1} ms" +
+  "\n*Max response time:* {2} ms" +
+  "\n*Min response time:* {3} ms").format(data.address, data.avg, data.max, data.min);
+}
+
+function createErrorMessage(data){
+  return ("Pinging {0}... It's Dead!" +
+  "\nWe tried {1} times, but nobody was home.").format(data.address, data.attempts);
 }
