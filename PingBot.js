@@ -17,8 +17,11 @@ var PingBot = function() {
                 return;
             ping(update, update.inline_query.query, inlineQueryOnSuccess, inlineQueryOnError);
         }
-        else
-            ping(update, update.message.text, regularMessageOnSuccess, regularMessageOnError);
+        else {
+           var words = update.message.text.split(" ");
+           if (words && words.length > 1 && words[0] == "/ping")
+                ping(update, words[1], regularMessageOnSuccess, regularMessageOnError);
+       }
     });
     
     function ping(update, address, onSuccess, onError){
