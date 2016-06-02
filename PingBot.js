@@ -4,7 +4,6 @@ var tcpp = require('tcp-ping');
 var shortid = require('shortid');
 
 var bot_key = '212430951:AAG2IFMBY75hnLYkd49L108CstqLBmyJTU0';
-// var bot_key = '103382337:AAG3n048cyQ7VPTLzeGBbqrpcJdcQf9k7-w'
 format.extend(String.prototype)
 
 var PingBot = function() {
