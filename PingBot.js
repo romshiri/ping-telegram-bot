@@ -4,6 +4,7 @@ var tcpp = require('tcp-ping');
 var shortid = require('shortid');
 
 var bot_key = '212430951:AAG2IFMBY75hnLYkd49L108CstqLBmyJTU0';
+// var bot_key = '103382337:AAG3n048cyQ7VPTLzeGBbqrpcJdcQf9k7-w'
 format.extend(String.prototype)
 
 var PingBot = function() {
@@ -11,7 +12,7 @@ var PingBot = function() {
     bot.startPolling();
 
     bot.on('onMessageReceived', function(update) {
-    console.log(update);
+    // console.log(update);
         if(update.inline_query){
             if(update.inline_query.query === "")
                 return;
@@ -38,7 +39,7 @@ var PingBot = function() {
             type: 'article',
             id: '0',
             title: "Pinging " +  data.address + "...",
-            description: "It's alive! click for details.",
+            description: "It's alive!! click for details.",
             input_message_content : {
                 message_text: createMessage(data),
                 parse_mode: 'Markdown',
