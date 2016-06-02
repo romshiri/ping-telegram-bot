@@ -11,7 +11,7 @@ var PingBot = function() {
     bot.startPolling();
 
     bot.on('onMessageReceived', function(update) {
-    // console.log(update);
+    console.log(update);
         if(update.inline_query){
             if(update.inline_query.query === "")
                 return;
